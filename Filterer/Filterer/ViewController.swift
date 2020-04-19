@@ -12,11 +12,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     var filteredImage: UIImage?
     
-    enum filterColors {
-        case red,green,blue,yellow,purple
-    }
-    
-    var selectedFilter:filterColors?
+    var selectedFilter:String?
     
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var filterImageView: UIImageView!
@@ -26,6 +22,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet var filterView: UIView!
     
     @IBOutlet var filterButton: UIButton!
+    
+    @IBOutlet weak var redButton:UIButton!
+    @IBOutlet var greenButton:UIButton!
+    @IBOutlet var blueButton:UIButton!
+    @IBOutlet var yellowButton:UIButton!
+    @IBOutlet var purpleButton:UIButton!
+    
+    func togglingButtons(senderButton:UIButton! = nil) {
+        redButton.isSelected = false
+        greenButton.isSelected = false
+        blueButton.isSelected = false
+        yellowButton.isSelected = false
+        purpleButton.isSelected = false
+        
+        if senderButton != nil {
+            senderButton.isSelected = true
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +108,10 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     // MARK: Filter Menu
     @IBAction func onFilter(sender: UIButton) {
         if (sender.isSelected) {
+            togglingButtons()
+            filteredImageDeactivate()
             hideSecondaryMenu()
+            selectedFilter = nil
             sender.isSelected = false
         } else {
             showSecondaryMenu()
@@ -133,22 +150,22 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     }
     
     
-    func filteredImageActivate() {
-        view.addSubview(filterView)
+    func filteredImageActivate(nextFilterView:UIView? = nil) {
+        if nextFilterView == nil {
+            view.addSubview(filterView)
+        }
+        
     
         let bottomConstraint = filterView.bottomAnchor.constraint(equalTo: secondaryMenu.topAnchor)
         let leftConstraint = filterView.leftAnchor.constraint(equalTo: view.leftAnchor)
         let rightConstraint = filterView.rightAnchor.constraint(equalTo: view.rightAnchor)
         let topConstraint = filterView.topAnchor.constraint(equalTo: view.topAnchor)
+            
         
         NSLayoutConstraint.activate([bottomConstraint, leftConstraint, rightConstraint, topConstraint])
         
         view.layoutIfNeeded()
         
-        self.filterView.alpha = 0
-        UIView.animate(withDuration: 0.4) {
-            self.filterView.alpha = 1.0
-        }
     }
     
     func imageColoring(){
@@ -156,7 +173,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
         var rgbaImage = RGBAImage(image: image)!
         
-        let avgRed = 107
+        let avgRed = 107,avgGreen = 109,avgBlue = 110
         
         for y in 0..<rgbaImage.height {
             for x in 0..<rgbaImage.width {
@@ -165,14 +182,48 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 var pixel = rgbaImage.pixels[index]
                 
                 let redDelta = Int(pixel.red) - avgRed
-                
-                
-                var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
-                if (Int(pixel.red) < avgRed) {
-                    modifier = 1
+                let greenDelta = Int(pixel.green) - avgGreen
+                let blueDelta = Int(pixel.blue) - avgBlue
+
+                if selectedFilter == "Red" {
+                    var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
+                    if (Int(pixel.red) < avgRed) {
+                        modifier = 1
+                    }
+
+                    pixel.red = UInt8(max(min(255, Int(round(Double(avgRed) + modifier * Double(redDelta)))), 0))
+                }
+                else if selectedFilter == "Green" {
+                    var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
+                    if (Int(pixel.green) < avgGreen) {
+                        modifier = 1
+                    }
+                    pixel.green = UInt8(max(min(255, Int(round(Double(avgGreen) + modifier * Double(greenDelta)))), 0))
+                }
+                else if selectedFilter == "Blue" {
+                    var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
+                    if (Int(pixel.blue) < avgBlue) {
+                        modifier = 1
+                    }
+                    pixel.blue = UInt8(max(min(255, Int(round(Double(avgBlue) + modifier * Double(blueDelta)))), 0))
+                }
+                else if selectedFilter == "Purple" {
+                    var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
+                    if (Int(pixel.green) < avgGreen) {
+                        modifier = 1
+                    }
+                    
+                    pixel.green = UInt8(max(min(110, Int(round(Double(avgGreen) + modifier * Double(greenDelta)))), 20))
+                }
+                else if selectedFilter == "Yellow" {
+                    var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
+                    if (Int(pixel.blue) < avgBlue) {
+                        modifier = 1
+                    }
+                    
+                    pixel.blue = UInt8(max(min(50, Int(round(Double(avgBlue) + modifier * Double(blueDelta)))),0))
                 }
                 
-                pixel.red = UInt8(max(min(255, Int(round(Double(avgRed) + modifier * Double(redDelta)))), 0))
                 rgbaImage.pixels[index] = pixel
             }
         }
@@ -181,21 +232,34 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         filterImageView.image = result
     }
     
-    @IBAction func hi(sender: UIButton){
-        let colorDictionary = ["Red": filterColors.red , "Green": filterColors.green, "Blue": filterColors.blue, "Yellow": filterColors.yellow, "Purple": filterColors.purple]
+    
+    func filteredImageDeactivate(){
         
-        if selectedFilter == nil { // original image in imageView
+        view.subviews[view.subviews.count - 1].removeFromSuperview()
+        
+    }
+    
+    @IBAction func hi(sender: UIButton){
+        
+        
+        var previousSelectedFilter = selectedFilter
+        selectedFilter = sender.currentTitle!
+        
+        if previousSelectedFilter == nil { // original image in imageView
+            togglingButtons(senderButton: sender)
             filteredImageActivate()
             imageColoring()
         }
-        else if colorDictionary[sender.currentTitle!] == selectedFilter {  // cancel filtering
-            
+        else if sender.currentTitle! == previousSelectedFilter { //cancel filter color
+            togglingButtons()
+            selectedFilter = nil
+            previousSelectedFilter = nil
+            filteredImageDeactivate()
         }
         else { // choose other filter
-            
+            togglingButtons(senderButton: sender)
+            imageColoring()
         }
-        selectedFilter = colorDictionary[sender.currentTitle!]
-        
         
     }
 

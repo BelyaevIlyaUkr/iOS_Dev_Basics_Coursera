@@ -90,12 +90,17 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="blueButton" destination="sNq-be-bSy" id="OvW-I3-7KV"/>
                         <outlet property="bottomMenu" destination="JNF-wb-wwY" id="jTm-2q-PDu"/>
                         <outlet property="filterButton" destination="C6B-1F-j0K" id="6Kf-1q-zun"/>
                         <outlet property="filterImageView" destination="Fa4-oW-GRc" id="ZZV-yb-JE9"/>
                         <outlet property="filterView" destination="2CY-yv-3PU" id="p5t-K3-ZK9"/>
+                        <outlet property="greenButton" destination="axt-GK-a6m" id="tZ4-EI-TcI"/>
                         <outlet property="imageView" destination="aND-Em-4Dd" id="vbi-rB-DhQ"/>
+                        <outlet property="purpleButton" destination="7P8-VM-YCw" id="knY-5V-J2i"/>
+                        <outlet property="redButton" destination="Drk-Kp-614" id="lWD-6b-nCX"/>
                         <outlet property="secondaryMenu" destination="ePS-oG-ZHP" id="Be7-JW-Iwe"/>
+                        <outlet property="yellowButton" destination="zUq-ef-bpc" id="La4-Uq-IOf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
