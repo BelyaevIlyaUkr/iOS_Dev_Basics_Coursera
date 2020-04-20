@@ -22,6 +22,12 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>To take photo</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Just cause</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To save photo</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -30,12 +36,12 @@
 	<array>
 		<string>armv7</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>To take photo</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>To save photo</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Just cause</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

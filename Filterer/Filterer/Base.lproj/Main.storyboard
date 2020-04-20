@@ -19,9 +19,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="scenery" translatesAutoresizingMaskIntoConstraints="NO" id="aND-Em-4Dd">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="scenery" id="aND-Em-4Dd">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" image="YES" startsMediaSession="YES" allowsDirectInteraction="YES"/>
+                                </accessibility>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JNF-wb-wwY">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
@@ -120,9 +124,8 @@
                         <constraint firstAttribute="bottom" secondItem="Fa4-oW-GRc" secondAttribute="bottom" id="nTD-vJ-Twc"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" id="ePS-oG-ZHP">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePS-oG-ZHP">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="n3M-NR-6VP">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>

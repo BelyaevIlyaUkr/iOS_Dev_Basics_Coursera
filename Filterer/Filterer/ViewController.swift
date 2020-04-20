@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var filteredImage: UIImage?
+    var originalImage = UIImage(named: "scenery")
     
     var selectedFilter:String?
     
@@ -50,7 +51,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     // MARK: Share
     @IBAction func onShare(sender: AnyObject) {
-        let activityController = UIActivityViewController(activityItems: ["Check out our really cool app", imageView.image!], applicationActivities: nil)
+        let activityController:UIActivityViewController
+        
+        if selectedFilter != nil {
+            activityController = UIActivityViewController(activityItems: ["Check out our really cool app", filterImageView.image!], applicationActivities: nil)
+        }
+        else {
+            activityController = UIActivityViewController(activityItems: ["Check out our really cool app", imageView.image!], applicationActivities: nil)
+        }
         present(activityController, animated: true, completion: nil)
     }
     
@@ -59,6 +67,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let actionSheet = UIAlertController(title: "New Photo", message: nil, preferredStyle: .actionSheet)
         
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
+            
             self.showCamera()
         }))
         
@@ -92,13 +101,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 // Local variable inserted by Swift 4.2 migrator.
 let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
-// Local variable inserted by Swift 4.2 migrator.
-//let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
-
-        dismiss(animated: true, completion: nil)
         if let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage as UIImagePickerController.InfoKey)] as? UIImage {
             imageView.image = image
+            originalImage = image
         }
+         dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -136,18 +143,21 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
         self.secondaryMenu.alpha = 0
         UIView.animate(withDuration: 0.4) {
-            self.secondaryMenu.alpha = 1.0
+            self.secondaryMenu.alpha = 1
         }
     }
 
     func hideSecondaryMenu() {
-        UIView.animate(withDuration: 0.4, animations: {
-            self.secondaryMenu.alpha = 0
-            }) { completed in
-                if completed == true {
-                    self.secondaryMenu.removeFromSuperview()
-                }
-        }
+        UIView.animate(withDuration: 0.4,
+            animations: {
+                self.secondaryMenu.alpha = 0
+            },
+            completion:  { finished in
+                    if finished {
+                        self.secondaryMenu.removeFromSuperview()
+                    }
+            }
+        )
     }
     
     
@@ -177,7 +187,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     
     func imageColoring(returnImageViewToOriginalImage: Bool = false,previousFilter:String? = nil) {
         
-        let image = UIImage(named: "scenery")!
+        let image = originalImage!
         
         var rgbaImage = RGBAImage(image: image)!
         
