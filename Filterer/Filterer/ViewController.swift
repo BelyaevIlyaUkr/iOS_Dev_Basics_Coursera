@@ -109,6 +109,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     @IBAction func onFilter(sender: UIButton) {
         if (sender.isSelected) {
             togglingButtons()
+            imageColoring(returnImageViewToOriginalImage: true)
             filteredImageDeactivate()
             hideSecondaryMenu()
             selectedFilter = nil
@@ -150,29 +151,51 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     }
     
     
-    func filteredImageActivate(nextFilterView:UIView? = nil) {
-        if nextFilterView == nil {
-            view.addSubview(filterView)
-        }
+    func filteredImageActivate() {
+        filterView.alpha = 0
         
-    
+        view.addSubview(filterView)
+        
         let bottomConstraint = filterView.bottomAnchor.constraint(equalTo: secondaryMenu.topAnchor)
+        
         let leftConstraint = filterView.leftAnchor.constraint(equalTo: view.leftAnchor)
+        
         let rightConstraint = filterView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        
         let topConstraint = filterView.topAnchor.constraint(equalTo: view.topAnchor)
             
-        
         NSLayoutConstraint.activate([bottomConstraint, leftConstraint, rightConstraint, topConstraint])
-        
+            
         view.layoutIfNeeded()
         
+        UIView.animate(withDuration: 1,
+            animations: {
+                self.view.subviews[self.view.subviews.count - 1].alpha = 1
+            }
+        )
     }
     
-    func imageColoring(){
+    func imageColoring(returnImageViewToOriginalImage: Bool = false,previousFilter:String? = nil) {
+        
         let image = UIImage(named: "scenery")!
         
         var rgbaImage = RGBAImage(image: image)!
         
+        if returnImageViewToOriginalImage {
+            let result = rgbaImage.toUIImage()
+            imageView.image = result
+            return
+        }
+        
+        var selectFilter = ""
+        
+        if previousFilter == nil {
+            selectFilter = self.selectedFilter!
+        }
+        else{
+            selectFilter = previousFilter!
+        }
+    
         let avgRed = 107,avgGreen = 109,avgBlue = 110
         
         for y in 0..<rgbaImage.height {
@@ -184,30 +207,30 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 let redDelta = Int(pixel.red) - avgRed
                 let greenDelta = Int(pixel.green) - avgGreen
                 let blueDelta = Int(pixel.blue) - avgBlue
-
-                if selectedFilter == "Red" {
+                
+                if selectFilter == "Red" {
                     var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
                     if (Int(pixel.red) < avgRed) {
                         modifier = 1
                     }
-
+                    
                     pixel.red = UInt8(max(min(255, Int(round(Double(avgRed) + modifier * Double(redDelta)))), 0))
                 }
-                else if selectedFilter == "Green" {
+                else if selectFilter == "Green" {
                     var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
                     if (Int(pixel.green) < avgGreen) {
                         modifier = 1
                     }
                     pixel.green = UInt8(max(min(255, Int(round(Double(avgGreen) + modifier * Double(greenDelta)))), 0))
                 }
-                else if selectedFilter == "Blue" {
+                else if selectFilter == "Blue" {
                     var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
                     if (Int(pixel.blue) < avgBlue) {
                         modifier = 1
                     }
                     pixel.blue = UInt8(max(min(255, Int(round(Double(avgBlue) + modifier * Double(blueDelta)))), 0))
                 }
-                else if selectedFilter == "Purple" {
+                else if selectFilter == "Purple" {
                     var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
                     if (Int(pixel.green) < avgGreen) {
                         modifier = 1
@@ -215,7 +238,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                     
                     pixel.green = UInt8(max(min(110, Int(round(Double(avgGreen) + modifier * Double(greenDelta)))), 20))
                 }
-                else if selectedFilter == "Yellow" {
+                else if selectFilter == "Yellow" {
                     var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
                     if (Int(pixel.blue) < avgBlue) {
                         modifier = 1
@@ -229,36 +252,49 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         }
         
         let result = rgbaImage.toUIImage()
-        filterImageView.image = result
+        if previousFilter == nil {
+            filterImageView.image = result
+        }
+        else {
+            imageView.image = result
+        }
     }
     
     
     func filteredImageDeactivate(){
-        
-        view.subviews[view.subviews.count - 1].removeFromSuperview()
-        
+        UIView.animate(withDuration: 1,
+            animations: {
+                self.view.subviews[self.view.subviews.count - 1].alpha = 0
+            },
+            completion: {
+                finished in
+                if finished {self.view.subviews[self.view.subviews.count - 1].removeFromSuperview()}
+            }
+        )
     }
     
     @IBAction func hi(sender: UIButton){
-        
         
         var previousSelectedFilter = selectedFilter
         selectedFilter = sender.currentTitle!
         
         if previousSelectedFilter == nil { // original image in imageView
             togglingButtons(senderButton: sender)
-            filteredImageActivate()
             imageColoring()
+            filteredImageActivate()
         }
         else if sender.currentTitle! == previousSelectedFilter { //cancel filter color
             togglingButtons()
             selectedFilter = nil
             previousSelectedFilter = nil
+            imageColoring(returnImageViewToOriginalImage: true)
             filteredImageDeactivate()
         }
         else { // choose other filter
-            togglingButtons(senderButton: sender)
+            imageColoring(previousFilter: previousSelectedFilter)
             imageColoring()
+            filteredImageActivate()
+            togglingButtons(senderButton: sender)
         }
         
     }
