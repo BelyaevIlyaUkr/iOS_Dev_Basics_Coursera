@@ -31,6 +31,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet var yellowButton:UIButton!
     @IBOutlet var purpleButton:UIButton!
     
+    @IBOutlet var originalImageLabel: UILabel!
+    
     func togglingButtons(senderButton:UIButton! = nil) {
         redButton.isSelected = false
         greenButton.isSelected = false
@@ -40,6 +42,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         if senderButton != nil {
             senderButton.isSelected = true
+            originalImageLabel.isHidden = false
+            compareButton.isSelected = false
+            compareButton.isEnabled = true
         }
         else {
             compareButton.isSelected = false
@@ -198,6 +203,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         if returnImageViewToOriginalImage {
             let result = rgbaImage.toUIImage()
             imageView.image = result
+            originalImageLabel.isHidden = false
             return
         }
         
@@ -290,6 +296,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     @IBAction func compare(sender: UIButton){
         if sender.isSelected {
             sender.isSelected = false
+            originalImageLabel.isHidden = true
             
             UIView.animate(withDuration: 1.5,
                 animations: {
@@ -299,8 +306,8 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             
         }
         else {
-            
             sender.isSelected = true
+            originalImageLabel.isHidden = true
             
             UIView.animate(withDuration: 1.5,
                 animations: {
@@ -309,7 +316,6 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             )
             
             imageColoring(returnImageViewToOriginalImage: true)
-            
         }
     }
     
@@ -345,6 +351,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             imageColoring()
             filteredImageActivate()
             compareButton.isEnabled = true
+            originalImageLabel.isHidden = true
         }
         else if sender.currentTitle! == previousSelectedFilter { //cancel filter color
             togglingButtons()
@@ -358,9 +365,8 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             imageColoring()
             filteredImageActivate()
             togglingButtons(senderButton: sender)
-            if compareButton.isSelected {
-                compareButton.isSelected = false
-            }
+            compareButton.isSelected = false
+            originalImageLabel.isHidden = true
         }
         
     }
