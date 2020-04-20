@@ -53,12 +53,15 @@
                                                     <action selector="onFilterWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0aW-WV-IG1"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPg-2N-f93">
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPg-2N-f93">
                                                 <rect key="frame" x="187.5" y="0.0" width="94" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="zgf-3k-aR7"/>
                                                 </constraints>
                                                 <state key="normal" title="Compare"/>
+                                                <connections>
+                                                    <action selector="compareWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Njw-YB-fSR"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Leg-ry-Zqw">
                                                 <rect key="frame" x="281.5" y="0.0" width="93.5" height="44"/>
@@ -96,6 +99,7 @@
                     <connections>
                         <outlet property="blueButton" destination="sNq-be-bSy" id="OvW-I3-7KV"/>
                         <outlet property="bottomMenu" destination="JNF-wb-wwY" id="jTm-2q-PDu"/>
+                        <outlet property="compareButton" destination="tPg-2N-f93" id="GM8-Yy-4iP"/>
                         <outlet property="filterButton" destination="C6B-1F-j0K" id="6Kf-1q-zun"/>
                         <outlet property="filterImageView" destination="Fa4-oW-GRc" id="ZZV-yb-JE9"/>
                         <outlet property="filterView" destination="2CY-yv-3PU" id="p5t-K3-ZK9"/>

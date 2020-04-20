@@ -23,6 +23,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet var filterView: UIView!
     
     @IBOutlet var filterButton: UIButton!
+    @IBOutlet var compareButton: UIButton!
     
     @IBOutlet weak var redButton:UIButton!
     @IBOutlet var greenButton:UIButton!
@@ -39,6 +40,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         if senderButton != nil {
             senderButton.isSelected = true
+        }
+        else {
+            compareButton.isSelected = false
+            compareButton.isEnabled = false
         }
     }
     
@@ -115,16 +120,15 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     // MARK: Filter Menu
     @IBAction func onFilter(sender: UIButton) {
         if (sender.isSelected) {
+            sender.isSelected = false
             togglingButtons()
             imageColoring(returnImageViewToOriginalImage: true)
             filteredImageDeactivate()
             hideSecondaryMenu()
             selectedFilter = nil
-            sender.isSelected = false
         } else {
-            showSecondaryMenu()
             sender.isSelected = true
-           
+            showSecondaryMenu()
         }
     }
     
@@ -142,13 +146,13 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         view.layoutIfNeeded()
         
         self.secondaryMenu.alpha = 0
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.8) {
             self.secondaryMenu.alpha = 1
         }
     }
 
     func hideSecondaryMenu() {
-        UIView.animate(withDuration: 0.4,
+        UIView.animate(withDuration: 0.8,
             animations: {
                 self.secondaryMenu.alpha = 0
             },
@@ -178,7 +182,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             
         view.layoutIfNeeded()
         
-        UIView.animate(withDuration: 1,
+        UIView.animate(withDuration: 0.8,
             animations: {
                 self.view.subviews[self.view.subviews.count - 1].alpha = 1
             }
@@ -272,7 +276,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     
     
     func filteredImageDeactivate(){
-        UIView.animate(withDuration: 1,
+        UIView.animate(withDuration: 0.8,
             animations: {
                 self.view.subviews[self.view.subviews.count - 1].alpha = 0
             },
@@ -281,6 +285,32 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 if finished {self.view.subviews[self.view.subviews.count - 1].removeFromSuperview()}
             }
         )
+    }
+    
+    @IBAction func compare(sender: UIButton){
+        if sender.isSelected {
+            sender.isSelected = false
+            
+            UIView.animate(withDuration: 1.5,
+                animations: {
+                    self.view.subviews[self.view.subviews.count - 1].alpha = 1
+                }
+            )
+            
+        }
+        else {
+            
+            sender.isSelected = true
+            
+            UIView.animate(withDuration: 1.5,
+                animations: {
+                    self.view.subviews[self.view.subviews.count - 1].alpha = 0
+                }
+            )
+            
+            imageColoring(returnImageViewToOriginalImage: true)
+            
+        }
     }
     
     @IBAction func hi(sender: UIButton){
@@ -292,6 +322,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             togglingButtons(senderButton: sender)
             imageColoring()
             filteredImageActivate()
+            compareButton.isEnabled = true
         }
         else if sender.currentTitle! == previousSelectedFilter { //cancel filter color
             togglingButtons()
@@ -305,6 +336,9 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             imageColoring()
             filteredImageActivate()
             togglingButtons(senderButton: sender)
+            if compareButton.isSelected {
+                compareButton.isSelected = false
+            }
         }
         
     }
