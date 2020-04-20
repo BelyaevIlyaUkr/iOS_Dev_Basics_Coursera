@@ -313,6 +313,28 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         }
     }
     
+    @IBAction func touchFilteredImage(_ gesture: UILongPressGestureRecognizer){
+        
+        switch gesture.state {
+        case .began:
+            UIView.animate(
+                withDuration: 0.8,
+                animations: {
+                    self.filterView.alpha = 0
+                }
+            )
+            imageColoring(returnImageViewToOriginalImage: true)
+       
+        default:
+            UIView.animate(
+                withDuration: 0.8,
+                animations: {
+                    self.filterView.alpha = 1
+                }
+            )
+        }
+    }
+    
     @IBAction func hi(sender: UIButton){
         
         var previousSelectedFilter = selectedFilter
