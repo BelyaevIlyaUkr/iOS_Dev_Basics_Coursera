@@ -30,21 +30,21 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JNF-wb-wwY">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="mAB-Ff-DGi">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="mAB-Ff-DGi">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kPg-yq-mNp">
-                                                <rect key="frame" x="0.0" y="0.0" width="94" height="44"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="79" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="Qiv-OS-HEF"/>
                                                 </constraints>
-                                                <state key="normal" title="New Photo"/>
+                                                <state key="normal" title=" New Photo"/>
                                                 <connections>
                                                     <action selector="onNewPhotoWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Yr9-1Y-RHs"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C6B-1F-j0K">
-                                                <rect key="frame" x="94" y="0.0" width="93.5" height="44"/>
+                                                <rect key="frame" x="111" y="0.0" width="35" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="9TF-bC-3of"/>
                                                 </constraints>
@@ -53,8 +53,15 @@
                                                     <action selector="onFilterWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0aW-WV-IG1"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V8Y-vc-GoU">
+                                                <rect key="frame" x="178" y="0.0" width="30" height="44"/>
+                                                <state key="normal" title="Edit"/>
+                                                <connections>
+                                                    <action selector="editButtonTouchedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3hM-HS-EwK"/>
+                                                </connections>
+                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPg-2N-f93">
-                                                <rect key="frame" x="187.5" y="0.0" width="94" height="44"/>
+                                                <rect key="frame" x="240" y="0.0" width="63" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="zgf-3k-aR7"/>
                                                 </constraints>
@@ -64,7 +71,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Leg-ry-Zqw">
-                                                <rect key="frame" x="281.5" y="0.0" width="93.5" height="44"/>
+                                                <rect key="frame" x="335" y="0.0" width="40" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="IZl-Nh-MXv"/>
                                                 </constraints>
@@ -115,19 +122,57 @@
                         <outlet property="blueButton" destination="sNq-be-bSy" id="OvW-I3-7KV"/>
                         <outlet property="bottomMenu" destination="JNF-wb-wwY" id="jTm-2q-PDu"/>
                         <outlet property="compareButton" destination="tPg-2N-f93" id="GM8-Yy-4iP"/>
+                        <outlet property="editButton" destination="V8Y-vc-GoU" id="TpS-VZ-959"/>
                         <outlet property="filterButton" destination="C6B-1F-j0K" id="6Kf-1q-zun"/>
                         <outlet property="filterImageView" destination="Fa4-oW-GRc" id="ZZV-yb-JE9"/>
                         <outlet property="filterView" destination="2CY-yv-3PU" id="p5t-K3-ZK9"/>
                         <outlet property="greenButton" destination="axt-GK-a6m" id="tZ4-EI-TcI"/>
                         <outlet property="imageView" destination="aND-Em-4Dd" id="vbi-rB-DhQ"/>
+                        <outlet property="intensitySlider" destination="ovl-HK-f54" id="spf-Ko-Dzy"/>
+                        <outlet property="maxSliderLabel" destination="dBg-3T-JPl" id="yJC-QW-70j"/>
+                        <outlet property="minSliderLabel" destination="VI8-4p-EVb" id="pxI-Af-kut"/>
                         <outlet property="originalImageLabel" destination="7DD-rD-qWd" id="Pi3-qG-vuJ"/>
                         <outlet property="purpleButton" destination="7P8-VM-YCw" id="knY-5V-J2i"/>
                         <outlet property="redButton" destination="Drk-Kp-614" id="lWD-6b-nCX"/>
                         <outlet property="secondaryMenu" destination="ePS-oG-ZHP" id="Be7-JW-Iwe"/>
+                        <outlet property="sliderView" destination="rLz-Fd-yeN" id="38k-sq-nQU"/>
                         <outlet property="yellowButton" destination="zUq-ef-bpc" id="La4-Uq-IOf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="rLz-Fd-yeN">
+                    <rect key="frame" x="0.0" y="0.0" width="253" height="73"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="ovl-HK-f54" userLabel="intensitySlider">
+                            <rect key="frame" x="9" y="30" width="234" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="maximumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </slider>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dBg-3T-JPl">
+                            <rect key="frame" x="227" y="31" width="22" height="10"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VI8-4p-EVb">
+                            <rect key="frame" x="4" y="27" width="21.5" height="19"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="dBg-3T-JPl" secondAttribute="bottom" constant="32" id="1AN-Pw-RhY"/>
+                        <constraint firstItem="VI8-4p-EVb" firstAttribute="leading" secondItem="rLz-Fd-yeN" secondAttribute="leading" constant="4" id="2id-E1-83d"/>
+                        <constraint firstAttribute="trailing" secondItem="dBg-3T-JPl" secondAttribute="trailing" constant="4" id="DN4-fV-pgP"/>
+                        <constraint firstItem="VI8-4p-EVb" firstAttribute="top" secondItem="rLz-Fd-yeN" secondAttribute="top" constant="27" id="EnH-ee-Pdp"/>
+                        <constraint firstAttribute="bottom" secondItem="VI8-4p-EVb" secondAttribute="bottom" constant="27" id="LeB-MC-NlP"/>
+                        <constraint firstItem="dBg-3T-JPl" firstAttribute="top" secondItem="rLz-Fd-yeN" secondAttribute="top" constant="31" id="WGc-kG-rZB"/>
+                        <constraint firstItem="dBg-3T-JPl" firstAttribute="leading" secondItem="VI8-4p-EVb" secondAttribute="trailing" constant="201.5" id="eAm-cP-m2g"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2CY-yv-3PU">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <subviews>

@@ -19,11 +19,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet var filterImageView: UIImageView!
     
     @IBOutlet var secondaryMenu: UIView!
+    @IBOutlet var sliderView: UIView!
     @IBOutlet var bottomMenu: UIView!
     @IBOutlet var filterView: UIView!
     
     @IBOutlet var filterButton: UIButton!
     @IBOutlet var compareButton: UIButton!
+    @IBOutlet var editButton: UIButton!
     
     @IBOutlet weak var redButton:UIButton!
     @IBOutlet var greenButton:UIButton!
@@ -32,6 +34,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet var purpleButton:UIButton!
     
     @IBOutlet var originalImageLabel: UILabel!
+    @IBOutlet var minSliderLabel:UILabel!
+    @IBOutlet var maxSliderLabel:UILabel!
+    
+    @IBOutlet var intensitySlider: UISlider!
     
     func togglingButtons(senderButton:UIButton! = nil) {
         redButton.isSelected = false
@@ -45,10 +51,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             originalImageLabel.isHidden = false
             compareButton.isSelected = false
             compareButton.isEnabled = true
+            editButton.isSelected = false
+            editButton.isEnabled = true
         }
         else {
             compareButton.isSelected = false
             compareButton.isEnabled = false
+            editButton.isSelected = false
+            editButton.isEnabled = false
         }
     }
     
@@ -57,6 +67,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         secondaryMenu.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         secondaryMenu.translatesAutoresizingMaskIntoConstraints = false
         filterView.translatesAutoresizingMaskIntoConstraints = false
+        sliderView.translatesAutoresizingMaskIntoConstraints = false
     }
 
     // MARK: Share
@@ -154,6 +165,26 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         UIView.animate(withDuration: 0.8) {
             self.secondaryMenu.alpha = 1
         }
+       
+    }
+    
+    func showSlider(){
+        view.addSubview(sliderView)
+        
+        let bottomConstraint = sliderView.bottomAnchor.constraint(equalTo: bottomMenu.topAnchor)
+        let leftConstraint = sliderView.leftAnchor.constraint(equalTo: view.leftAnchor)
+        let rightConstraint = sliderView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        
+        let heightConstraint = sliderView.heightAnchor.constraint(equalToConstant: 44)
+        
+        NSLayoutConstraint.activate([bottomConstraint, leftConstraint, rightConstraint, heightConstraint])
+        
+        view.layoutIfNeeded()
+        
+        self.sliderView.alpha = 0
+        UIView.animate(withDuration: 0.8) {
+            self.sliderView.alpha = 1
+        }
     }
 
     func hideSecondaryMenu() {
@@ -164,6 +195,19 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             completion:  { finished in
                     if finished {
                         self.secondaryMenu.removeFromSuperview()
+                    }
+            }
+        )
+    }
+    
+    func hideSlider(){
+        UIView.animate(withDuration: 0.8,
+            animations: {
+                self.sliderView.alpha = 0
+            },
+            completion:  { finished in
+                    if finished {
+                        self.sliderView.removeFromSuperview()
                     }
             }
         )
@@ -338,6 +382,21 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                     self.filterView.alpha = 1
                 }
             )
+        }
+    }
+    
+    @IBAction func editButtonTouched(sender: UIButton!) {
+        if !sender.isSelected {
+            sender.isSelected = true
+            secondaryMenu.isHidden = true
+            secondaryMenu.isUserInteractionEnabled = false
+            //hideSecondaryMenu()
+            showSlider()
+        }
+        else {
+            sender.isSelected = false
+            hideSlider()
+            showSecondaryMenu()
         }
     }
     
