@@ -234,21 +234,21 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                         modifier = 1
                     }
                     
-                    pixel.red = UInt8(max(min(255, Int(round(Double(avgRed) + modifier * Double(redDelta)))), 0))
+                    pixel.red = UInt8(max(min(255, Int(round(Double(avgRed) + modifier * Double(redDelta)))), 150))
                 }
                 else if selectFilter == "Green" {
                     var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
                     if (Int(pixel.green) < avgGreen) {
                         modifier = 1
                     }
-                    pixel.green = UInt8(max(min(255, Int(round(Double(avgGreen) + modifier * Double(greenDelta)))), 0))
+                    pixel.green = UInt8(max(min(255, Int(round(Double(avgGreen) + modifier * Double(greenDelta)))), 60))
                 }
                 else if selectFilter == "Blue" {
                     var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
                     if (Int(pixel.blue) < avgBlue) {
                         modifier = 1
                     }
-                    pixel.blue = UInt8(max(min(255, Int(round(Double(avgBlue) + modifier * Double(blueDelta)))), 0))
+                    pixel.blue = UInt8(max(min(255, Int(round(Double(avgBlue) + modifier * Double(blueDelta)))), 150))
                 }
                 else if selectFilter == "Purple" {
                     var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
@@ -256,7 +256,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                         modifier = 1
                     }
                     
-                    pixel.green = UInt8(max(min(110, Int(round(Double(avgGreen) + modifier * Double(greenDelta)))), 20))
+                    pixel.green = UInt8(max(min(110, Int(round(Double(avgGreen) + modifier * Double(greenDelta)))), 50))
                 }
                 else if selectFilter == "Yellow" {
                     var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
