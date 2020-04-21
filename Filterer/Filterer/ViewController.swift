@@ -155,7 +155,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         let leftConstraint = secondaryMenu.leftAnchor.constraint(equalTo: view.leftAnchor)
         let rightConstraint = secondaryMenu.rightAnchor.constraint(equalTo: view.rightAnchor)
         
-        let heightConstraint = secondaryMenu.heightAnchor.constraint(equalToConstant: 44)
+        let heightConstraint = secondaryMenu.heightAnchor.constraint(equalToConstant: 55)
         
         NSLayoutConstraint.activate([bottomConstraint, leftConstraint, rightConstraint, heightConstraint])
         
@@ -175,7 +175,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         let leftConstraint = sliderView.leftAnchor.constraint(equalTo: view.leftAnchor)
         let rightConstraint = sliderView.rightAnchor.constraint(equalTo: view.rightAnchor)
         
-        let heightConstraint = sliderView.heightAnchor.constraint(equalToConstant: 44)
+        let heightConstraint = sliderView.heightAnchor.constraint(equalToConstant: 73)
         
         NSLayoutConstraint.activate([bottomConstraint, leftConstraint, rightConstraint, heightConstraint])
         
@@ -396,7 +396,8 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         else {
             sender.isSelected = false
             hideSlider()
-            showSecondaryMenu()
+            secondaryMenu.isHidden = false
+            secondaryMenu.isUserInteractionEnabled = true
         }
     }
     
@@ -428,6 +429,9 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             originalImageLabel.isHidden = true
         }
         
+    }
+    @IBAction func sliderValueChanged(sender: UISlider){
+        print("Hello")
     }
 
 }

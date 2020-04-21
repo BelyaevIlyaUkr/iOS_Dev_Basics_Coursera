@@ -141,36 +141,45 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <view contentMode="scaleToFill" id="rLz-Fd-yeN">
-                    <rect key="frame" x="0.0" y="0.0" width="253" height="73"/>
+                    <rect key="frame" x="0.0" y="0.0" width="396" height="73"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="ovl-HK-f54" userLabel="intensitySlider">
-                            <rect key="frame" x="9" y="30" width="234" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="127" minValue="0.0" maxValue="255" translatesAutoresizingMaskIntoConstraints="NO" id="ovl-HK-f54" userLabel="intensitySlider">
+                            <rect key="frame" x="10" y="31" width="376" height="31"/>
                             <color key="maximumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="sliderValueChangedWithSender:" destination="BYZ-38-t0r" eventType="valueChanged" id="nJG-CJ-9ww"/>
+                            </connections>
                         </slider>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dBg-3T-JPl">
-                            <rect key="frame" x="227" y="31" width="22" height="10"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VI8-4p-EVb">
+                            <rect key="frame" x="5" y="29" width="22" height="14"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="22" id="KIu-ol-3k5"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VI8-4p-EVb">
-                            <rect key="frame" x="4" y="27" width="21.5" height="19"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="255" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dBg-3T-JPl">
+                            <rect key="frame" x="339" y="29" width="49" height="14"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="dBg-3T-JPl" secondAttribute="bottom" constant="32" id="1AN-Pw-RhY"/>
-                        <constraint firstItem="VI8-4p-EVb" firstAttribute="leading" secondItem="rLz-Fd-yeN" secondAttribute="leading" constant="4" id="2id-E1-83d"/>
-                        <constraint firstAttribute="trailing" secondItem="dBg-3T-JPl" secondAttribute="trailing" constant="4" id="DN4-fV-pgP"/>
-                        <constraint firstItem="VI8-4p-EVb" firstAttribute="top" secondItem="rLz-Fd-yeN" secondAttribute="top" constant="27" id="EnH-ee-Pdp"/>
-                        <constraint firstAttribute="bottom" secondItem="VI8-4p-EVb" secondAttribute="bottom" constant="27" id="LeB-MC-NlP"/>
-                        <constraint firstItem="dBg-3T-JPl" firstAttribute="top" secondItem="rLz-Fd-yeN" secondAttribute="top" constant="31" id="WGc-kG-rZB"/>
-                        <constraint firstItem="dBg-3T-JPl" firstAttribute="leading" secondItem="VI8-4p-EVb" secondAttribute="trailing" constant="201.5" id="eAm-cP-m2g"/>
+                        <constraint firstItem="ovl-HK-f54" firstAttribute="leading" secondItem="rLz-Fd-yeN" secondAttribute="leading" constant="12" id="0hR-do-EBw"/>
+                        <constraint firstItem="dBg-3T-JPl" firstAttribute="top" secondItem="rLz-Fd-yeN" secondAttribute="top" constant="29" id="5zH-48-bXq"/>
+                        <constraint firstItem="ovl-HK-f54" firstAttribute="top" secondItem="rLz-Fd-yeN" secondAttribute="top" constant="31" id="HNe-n3-i7E"/>
+                        <constraint firstAttribute="bottom" secondItem="VI8-4p-EVb" secondAttribute="bottom" constant="30" id="I3v-LO-T4W"/>
+                        <constraint firstItem="VI8-4p-EVb" firstAttribute="top" secondItem="rLz-Fd-yeN" secondAttribute="top" constant="29" id="MVk-OH-BoA"/>
+                        <constraint firstAttribute="bottom" secondItem="dBg-3T-JPl" secondAttribute="bottom" constant="30" id="OiJ-4h-Vhx"/>
+                        <constraint firstAttribute="bottom" secondItem="ovl-HK-f54" secondAttribute="bottom" constant="12" id="QJA-Y5-rFM"/>
+                        <constraint firstAttribute="trailing" secondItem="dBg-3T-JPl" secondAttribute="trailing" constant="7.5" id="ReP-14-AE4"/>
+                        <constraint firstItem="dBg-3T-JPl" firstAttribute="leading" secondItem="VI8-4p-EVb" secondAttribute="trailing" constant="312" id="byy-ex-m4t"/>
+                        <constraint firstItem="VI8-4p-EVb" firstAttribute="leading" secondItem="rLz-Fd-yeN" secondAttribute="leading" constant="5" id="ls1-qK-CgQ"/>
+                        <constraint firstAttribute="trailing" secondItem="ovl-HK-f54" secondAttribute="trailing" constant="12" id="wTC-uU-rii"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2CY-yv-3PU">
