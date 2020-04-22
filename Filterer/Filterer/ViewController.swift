@@ -135,16 +135,25 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     
     // MARK: Filter Menu
     @IBAction func onFilter(sender: UIButton) {
-        if (sender.isSelected) {
+        if sender.isSelected {
             sender.isSelected = false
+            if editButton.isSelected {
+                hideSlider()
+            }
             togglingButtons()
+            hideSecondaryMenu()
             imageColoring(returnImageViewToOriginalImage: true)
             filteredImageDeactivate()
-            hideSecondaryMenu()
             selectedFilter = nil
         } else {
             sender.isSelected = true
             showSecondaryMenu()
+            selectedFilter = "Red"
+            togglingButtons(senderButton: redButton)
+            imageColoring()
+            compareButton.isEnabled = true
+            originalImageLabel.isHidden = true
+            filteredImageActivate()
         }
     }
     
@@ -170,12 +179,12 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     
     func showSlider(){
         view.addSubview(sliderView)
-        
+
         let bottomConstraint = sliderView.bottomAnchor.constraint(equalTo: bottomMenu.topAnchor)
         let leftConstraint = sliderView.leftAnchor.constraint(equalTo: view.leftAnchor)
         let rightConstraint = sliderView.rightAnchor.constraint(equalTo: view.rightAnchor)
         
-        let heightConstraint = sliderView.heightAnchor.constraint(equalToConstant: 73)
+        let heightConstraint = sliderView.heightAnchor.constraint(equalToConstant: 69)
         
         NSLayoutConstraint.activate([bottomConstraint, leftConstraint, rightConstraint, heightConstraint])
         
@@ -233,12 +242,12 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
         UIView.animate(withDuration: 0.8,
             animations: {
-                self.view.subviews[self.view.subviews.count - 1].alpha = 1
+                self.filterView.alpha = 1
             }
         )
     }
     
-    func imageColoring(returnImageViewToOriginalImage: Bool = false,previousFilter:String? = nil) {
+    func imageColoring(returnImageViewToOriginalImage: Bool = false,previousFilter:String? = nil,redColor: Int = 127,greenColor: Int = 127,blueColor: Int = 127,yellowColor: Int = 55, purpleColor: Int = 65) {
         
         let image = originalImage!
         
@@ -278,21 +287,29 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                         modifier = 1
                     }
                     
-                    pixel.red = UInt8(max(min(255, Int(round(Double(avgRed) + modifier * Double(redDelta)))), 150))
+                    let valueForColoring = min(255, Int(round(Double(avgRed) + modifier * Double(redDelta))))
+                    
+                    pixel.red = UInt8(max(valueForColoring, redColor))
                 }
                 else if selectFilter == "Green" {
                     var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
                     if (Int(pixel.green) < avgGreen) {
                         modifier = 1
                     }
-                    pixel.green = UInt8(max(min(255, Int(round(Double(avgGreen) + modifier * Double(greenDelta)))), 60))
+                    
+                    let valueForColoring = min(255, Int(round(Double(avgGreen) + modifier * Double(greenDelta))))
+                    
+                    pixel.green = UInt8(max(valueForColoring, greenColor))
                 }
                 else if selectFilter == "Blue" {
                     var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
                     if (Int(pixel.blue) < avgBlue) {
                         modifier = 1
                     }
-                    pixel.blue = UInt8(max(min(255, Int(round(Double(avgBlue) + modifier * Double(blueDelta)))), 150))
+                    
+                    let valueForColoring = min(255, Int(round(Double(avgBlue) + modifier * Double(blueDelta))))
+                    
+                    pixel.blue = UInt8(max(valueForColoring, blueColor))
                 }
                 else if selectFilter == "Purple" {
                     var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
@@ -300,7 +317,9 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                         modifier = 1
                     }
                     
-                    pixel.green = UInt8(max(min(110, Int(round(Double(avgGreen) + modifier * Double(greenDelta)))), 50))
+                    let valueForColoring = min(purpleColor, Int(round(Double(avgGreen) + modifier * Double(greenDelta))))
+                    
+                    pixel.green = UInt8(max(Float(valueForColoring), 0))
                 }
                 else if selectFilter == "Yellow" {
                     var modifier = 1 + 4 * (Double(y)/Double(rgbaImage.height))
@@ -308,7 +327,9 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                         modifier = 1
                     }
                     
-                    pixel.blue = UInt8(max(min(50, Int(round(Double(avgBlue) + modifier * Double(blueDelta)))),0))
+                    let valueForColoring = min(yellowColor, Int(round(Double(avgBlue) + modifier * Double(blueDelta))))
+                    
+                    pixel.blue = UInt8(max(valueForColoring, 0))
                 }
                 
                 rgbaImage.pixels[index] = pixel
@@ -328,11 +349,14 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     func filteredImageDeactivate(){
         UIView.animate(withDuration: 0.8,
             animations: {
-                self.view.subviews[self.view.subviews.count - 1].alpha = 0
+                self.filterView.alpha = 0
             },
             completion: {
                 finished in
-                if finished {self.view.subviews[self.view.subviews.count - 1].removeFromSuperview()}
+                if finished {
+                    self.filterView.removeFromSuperview()
+                
+                }
             }
         )
     }
@@ -344,7 +368,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             
             UIView.animate(withDuration: 1.5,
                 animations: {
-                    self.view.subviews[self.view.subviews.count - 1].alpha = 1
+                    self.filterView.alpha = 1
                 }
             )
             
@@ -355,7 +379,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             
             UIView.animate(withDuration: 1.5,
                 animations: {
-                    self.view.subviews[self.view.subviews.count - 1].alpha = 0
+                    self.filterView.alpha = 0
                 }
             )
             
@@ -390,7 +414,22 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             sender.isSelected = true
             secondaryMenu.isHidden = true
             secondaryMenu.isUserInteractionEnabled = false
-            //hideSecondaryMenu()
+            
+            switch selectedFilter {
+            case "Yellow","Purple":
+                minSliderLabel!.text = "max"
+                maxSliderLabel!.text = "min"
+                intensitySlider.minimumValue = 0
+                intensitySlider.maximumValue = 130
+                intensitySlider.value = 65
+            default:
+                minSliderLabel!.text = "min"
+                maxSliderLabel!.text = "max"
+                intensitySlider.minimumValue = 0
+                intensitySlider.maximumValue = 255
+                intensitySlider.value = 127
+            }
+            
             showSlider()
         }
         else {
@@ -398,6 +437,23 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             hideSlider()
             secondaryMenu.isHidden = false
             secondaryMenu.isUserInteractionEnabled = true
+        }
+    }
+    
+    @IBAction func sliderValueChanged(sender: UISlider){
+        let colorIntensity = Int(round(sender.value))
+        
+        switch selectedFilter {
+        case "Red":
+            imageColoring(redColor: colorIntensity)
+        case "Green":
+            imageColoring(greenColor: colorIntensity)
+        case "Blue":
+            imageColoring(blueColor: colorIntensity)
+        case "Yellow":
+            imageColoring(yellowColor: colorIntensity)
+        default:
+            imageColoring(purpleColor: colorIntensity)
         }
     }
     
@@ -429,9 +485,6 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             originalImageLabel.isHidden = true
         }
         
-    }
-    @IBAction func sliderValueChanged(sender: UISlider){
-        print("Hello")
     }
 
 }
