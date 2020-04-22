@@ -119,14 +119,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     // MARK: UIImagePickerControllerDelegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-// Local variable inserted by Swift 4.2 migrator.
-let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
-
+        // Local variable inserted by Swift 4.2 migrator.
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+        
         if let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage as UIImagePickerController.InfoKey)] as? UIImage {
-            imageView.image = image
-            originalImage = image
-        }
-         dismiss(animated: true, completion: nil)
+                imageView.image = image
+                originalImage = image
+                if editButton.isSelected {
+                    hideSlider()
+                }
+                if filterButton.isSelected {
+                    filterButton.isSelected = false
+                    hideSecondaryMenu()
+                }
+                togglingButtons()
+                imageColoring(returnImageViewToOriginalImage: true)
+                filteredImageDeactivate()
+                selectedFilter = nil
+            }
+            dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -359,7 +370,6 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 finished in
                 if finished {
                     self.filterView.removeFromSuperview()
-                
                 }
             }
         )
