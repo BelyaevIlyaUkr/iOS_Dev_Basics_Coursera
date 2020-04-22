@@ -147,10 +147,10 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             selectedFilter = nil
         } else {
             sender.isSelected = true
-            showSecondaryMenu()
             selectedFilter = "Red"
             togglingButtons(senderButton: redButton)
             imageColoring()
+            showSecondaryMenu()
             compareButton.isEnabled = true
             originalImageLabel.isHidden = true
             filteredImageActivate()
@@ -158,6 +158,10 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     }
     
     func showSecondaryMenu() {
+        
+        secondaryMenu.isHidden = false
+        secondaryMenu.isUserInteractionEnabled = true
+        
         view.addSubview(secondaryMenu)
         
         let bottomConstraint = secondaryMenu.bottomAnchor.constraint(equalTo: bottomMenu.topAnchor)
